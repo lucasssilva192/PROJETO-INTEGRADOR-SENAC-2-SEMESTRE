@@ -1,5 +1,12 @@
 <?php
-    require 'config/session.php';
+        require 'config/session.php';
+        require_once 'config/db.php';
+    
+        $userID =  $_SESSION['id'];
+    
+        $consulta = $objBanco->query("SELECT nome, userID, fotoUsuario
+        FROM usuario
+        WHERE userID = $userID");
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +58,13 @@
     <main>
         <div class="vertical-nav" id="sidebar">
             <div class="menu py-4 px-3 mb-4">
-                <div class="media d-flex align-items-center"><img
-                        src="images/hulk.jpg"
+                <div class="media d-flex align-items-center"> <img src=
+                <?php
+            
+                    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                        echo "{$linha['fotoUsuario']}";
+                    }
+                ?>
                         width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
                     <div class="media-body">
                         <h4 class="m-0">          
@@ -138,35 +150,33 @@
 
             $consulta = $objBanco->query("SELECT nomeSerie, temporada, duracaoEP, numEPS, sinopseSerie, destinoFoto, serieID
                                           FROM series AS S INNER JOIN usuario AS U
-                                          ON S.userID = U.userID");
+                                          ON S.userID = U.userID
+                                          ORDER BY serieID DESC");
 
 
             
     echo "<div class='lista_filmes'>";
 
     while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
-        echo "<div class='filmes'>";
-        echo "<section style='color:white;' >";
-        echo "<h2> {$linha['nomeSerie']} </h2>";
-        echo "<br>";
-        echo "<img src={$linha['destinoFoto']}>";
-        echo "<br>";
-        echo "<a> Temporada {$linha['temporada']} </a>";
-        echo "<br>";
-        echo "<a> Duração média de cada episódio {$linha['duracaoEP']} </a>";
-        echo "<br>";
-        echo "<a> Número de episódios:  {$linha['numEPS']} </a>";
-        echo "<br>";
-        echo "<p> {$linha['sinopseSerie']} </p>";
-        echo "<br><br>";
-        echo "<form action='config/excluirSerie.php' method='POST'>";
-        echo "<input type='text' value='{$linha['serieID']}' name='serieID' style='display: none;'> ";
-        echo "<input type='submit' value='Excluir Série'>";
-        echo "</form>";
-        echo "<br><br>";
-        echo "<div class='linha'> </div>";
-        echo "</section>";
-        echo "</div>";
+        echo "<div class='filmes'>
+        <section style='color:white;' >
+        <h2> {$linha['nomeSerie']} </h2> <br>
+        <img src={$linha['destinoFoto']}> <br>
+        <a> Temporada {$linha['temporada']} </a> <br>
+        <a> Duração média de cada episódio {$linha['duracaoEP']} </a> <br>
+        <a> Número de episódios:  {$linha['numEPS']} </a> <br>
+        <p> {$linha['sinopseSerie']} </p> <br><br>
+        <form action='config/excluirSerie.php' method='POST'>
+        <input type='text' value='{$linha['serieID']}' name='serieID' style='display: none;'> 
+        <input type='submit' value='Excluir Série'>
+        </form> <br><br>
+        <form action='editarSerie.php' method='POST'>
+        <input type='text' value='{$linha['serieID']}' name='serieID' style='display: none;'> 
+        <input type='submit' value='Editar Informações'>
+        </form> <br><br>
+        <div class='linha'> </div>
+            </section>
+            </div>";
     };
 
 echo "</div>";

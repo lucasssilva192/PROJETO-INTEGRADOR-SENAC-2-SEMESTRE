@@ -1,2 +1,5 @@
 # PROJETO-INTEGRADOR-SENAC-2-SEMESTRE
-Repositório do PI (Projeto Integrador) do segundo semestre do Centro Universitário SENAC, onde executei junto ao meu grupo um sistema de cadastro de filmes que retorna o tempo total que o usuário passou consumindo filmes e séries.
+INTEGRANTES: Lucas Santos Silva, Henrique Pereira Lima e Karina Alves de Lima
+Nosso projeto consiste em um sistema onde se cria um conta e é possível adicionar os filmes e séries que você já assistiu e nosso sistema calcula automáticamente o tempo que você já passou assistindo a essas mídias.
+O usuário além de inserir os filmes, pode os deletar e atualizar os dados dos mesmos. Bem como atualizar seus dados pessoais, inserir uma foto de perfil e atualizar sua senha.
+Utilizamos mysql para o banco de dados, php para programação back-end e HTML/CSS para o front-end. 

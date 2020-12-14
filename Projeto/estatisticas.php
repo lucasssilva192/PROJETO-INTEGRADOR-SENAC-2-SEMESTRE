@@ -1,6 +1,12 @@
 <?php
     require 'config/session.php';
     require_once 'config/db.php';
+
+    $userID =  $_SESSION['id'];
+
+    $consulta = $objBanco->query("SELECT nome, userID, fotoUsuario
+    FROM usuario
+    WHERE userID = $userID");
 ?>
 
 <!DOCTYPE html>
@@ -52,8 +58,13 @@
     <main>
         <div class="vertical-nav" id="sidebar">
             <div class="menu py-4 px-3 mb-4">
-                <div class="media d-flex align-items-center"><img
-                        src="images/hulk.jpg"
+                <div class="media d-flex align-items-center"> <img src=
+                <?php
+            
+                    while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                        echo "{$linha['fotoUsuario']}";
+                    }
+                ?>
                         width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
                     <div class="media-body">
                         <h4 class="m-0">           
@@ -65,10 +76,6 @@
                         <p class="font-weight-light text-muted mb-0">Cinéfilo</p>
                     </div>
                 </div>
-                <a href="config/deslogar.php">
-                <i class="fas fa-sign-out-alt" style="color:white"> </i>
-                    Deslogar
-                </a>
             </div>
 
             <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Página Inicial</p>
